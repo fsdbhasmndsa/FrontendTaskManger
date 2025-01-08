@@ -33,7 +33,7 @@ const Login = () => {
 
         if (res.data.code === 200) {
           toast.success("Đăng nhập thành công");
-          sessionStorage.setItem("Token", res.data.Token);
+       
           localStorage.setItem("Token", res.data.Token);
           Naviagte("/Task/dashboard");
         } else {
