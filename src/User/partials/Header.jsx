@@ -4,7 +4,7 @@ const Header = () => {
   const [NameUser,SetNameUser] = useState([])
   const GET_Name_User = async()=>{
     const res = await axios({
-      url: "http://localhost:8080/user/getnameuser", method: "GET", headers: {
+      url: "https://frontend-task-manager-ruddy.vercel.app//user/getnameuser", method: "GET", headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
       }
