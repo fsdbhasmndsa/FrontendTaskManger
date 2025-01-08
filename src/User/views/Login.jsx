@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { data, NavLink, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import * as Yup from "yup"
@@ -8,6 +8,7 @@ import GoogleLoginButton from './GoogleLoginButton'
 
 const Login = () => {
   const Naviagte = useNavigate();
+  const [loading, setLoading] = useState(false);
   const FormIk = useFormik({
     initialValues: {
       Email: "",
@@ -15,35 +16,50 @@ const Login = () => {
     },
     validationSchema: Yup.object({
       Email: Yup.string().required("Hãy nhập Email"),
-      Password: Yup.string().required("Hãy nhập Email")
+      Password: Yup.string().required("Hãy nhập mật khẩu")
     }),
     onSubmit: async (values) => {
-      console.log("first")
-      const res = await axios({
-        url: "https://backend-task-manager-one.vercel.app/user/login",
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: values,
-      })
-      if (res.data.code == 200) {
-        toast.success("Đăng nhập thành công");
-        sessionStorage.setItem("Token", res.data.Token)
-        localStorage.setItem("Token", res.data.Token)
+      setLoading(true);
 
-        Naviagte("/Task/dashboard")
+      try {
+        const res = await axios({
+          url: "https://backend-task-manager-one.vercel.app/user/login",
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          data: values,
+        });
 
-      }
-      else {
-        toast.error("Đăng nhập thất bại")
+        if (res.data.code === 200) {
+          toast.success("Đăng nhập thành công");
+          sessionStorage.setItem("Token", res.data.Token);
+          localStorage.setItem("Token", res.data.Token);
+          Naviagte("/Task/dashboard");
+        } else {
+          toast.error("Đăng nhập thất bại");
+        }
+      } catch (error) {
+        toast.error("Có lỗi xảy ra. Vui lòng thử lại");
+      } finally {
+        setLoading(false);  // Đặt loading thành false sau khi có phản hồi
       }
     }
+    
   })
 
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center vh-100">
+    <div className="d-flex flex-column align-items-center justify-content-center vh-100 position-relative">
       {/* Logo */}
+
+      {loading && (
+    <div className="spinner-overlay">
+      <div className="spinner-border text-success" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  )}
+
       <div className="mb-4">
         <img width="48" height="48" className='me-2' src="https://img.icons8.com/color/48/github--v1.png" alt="github--v1" />
       </div>
