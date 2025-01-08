@@ -13,7 +13,7 @@ const TableProject = () => {
 
   const Call_API_GetProjectByUser = async () => {
     const res = await axios({
-      url: "http://localhost:8080/project", method: "GET", headers: {
+      url: "https://backend-task-manager-one.vercel.app/project", method: "GET", headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
       }
@@ -44,7 +44,7 @@ const TableProject = () => {
       const close = document.getElementsByClassName("btn-close")[0];
       if (StatusUpdate) {
         const res = await axios({
-          url: "http://localhost:8080/project/Update", method: "PUT", data: values, headers: {
+          url: "http://locahttps://backend-task-manager-one.vercel.app/project/Update", method: "PUT", data: values, headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem("Token")}`,
           }
@@ -65,7 +65,7 @@ const TableProject = () => {
       }
       else {
         const res = await axios({
-          url: "http://localhost:8080/project/Create", method: "POST", data: values, headers: {
+          url: "https://backend-task-manager-one.vercel.app/project/Create", method: "POST", data: values, headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem("Token")}`,
           }
@@ -195,7 +195,7 @@ const TableProject = () => {
                           if (window.confirm("Bạn có muốn xóa dự án này không")) {
                             const values = { "ID": p._id }
                             const res = await axios({
-                              url: "http://localhost:8080/project/Delete", method: "PUT", data: values, headers: {
+                              url: "https://backend-task-manager-one.vercel.app/project/Delete", method: "PUT", data: values, headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: `Bearer ${localStorage.getItem("Token")}`,
                               }

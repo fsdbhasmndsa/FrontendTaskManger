@@ -30,7 +30,7 @@ const DashBoard = () => {
 
   const GetTaskByUser = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/task`, {
+      const res = await axios.get(`https://backend-task-manager-one.vercel.app/task`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,

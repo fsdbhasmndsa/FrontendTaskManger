@@ -39,7 +39,7 @@ const ForgotPassword = () => {
     onSubmit: async (values) => {
       console.log("first",values)
       const res = await axios({
-        url: "http://localhost:8080/user/forgotpassword",
+        url: "https://backend-task-manager-one.vercel.app/user/forgotpassword",
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const ForgotPassword = () => {
       values.Email = Email
       console.log("first",values)
       const res = await axios({
-        url: "http://localhost:8080/user/ResetPassword",
+        url: "https://backend-task-manager-one.vercel.app/user/ResetPassword",
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const ForgotPassword = () => {
       "Email":Email,
       "OTP":otpValue
     }
-    const res = await axios({url:"http://localhost:8080/otp/compareOTP",method:"POST",data:values,
+    const res = await axios({url:"https://backend-task-manager-one.vercel.app/otp/compareOTP",method:"POST",data:values,
       headers: {
         'Content-Type': 'application/json',
       }})

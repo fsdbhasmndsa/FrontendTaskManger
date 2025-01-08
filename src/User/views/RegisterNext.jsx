@@ -28,7 +28,7 @@ const RegisterNext = () => {
             console.log("first", values)
 
             const res = await axios({
-                url: "http://localhost:8080/user/register",
+                url: "https://backend-task-manager-one.vercel.app/user/register",
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

@@ -54,7 +54,7 @@ const TableTask = () => {
       console.log(values)
       const close = document.getElementsByClassName("btn-close")[1];
       if (StatusUpdate) {
-      const res = await axios({url:`http://localhost:8080/task/Update/${values.ID}`,method:"PUT",data:values, headers: {
+      const res = await axios({url:`https://backend-task-manager-one.vercel.app/task/Update/${values.ID}`,method:"PUT",data:values, headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
 
@@ -71,7 +71,7 @@ const TableTask = () => {
   
       }
       else {
-        const res = await axios({url:'http://localhost:8080/task/Create',method:"POST",data:values, headers: {
+        const res = await axios({url:'https://backend-task-manager-one.vercel.app/task/Create',method:"POST",data:values, headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,
         }
@@ -96,7 +96,7 @@ const TableTask = () => {
   // Lấy danh sách task theo ID project
   const GetTaskByUser = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/task/GETtaskByID/${projectId}`, {
+      const res = await axios.get(`https://backend-task-manager-one.vercel.app/task/GETtaskByID/${projectId}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,
@@ -110,7 +110,7 @@ const TableTask = () => {
 
   const AutoUpdateStatusNotFinish = async () => {
     
-      const res = await axios.get(`http://localhost:8080/task/AutoChangeStatus`, {
+      const res = await axios.get(`https://backend-task-manager-one.vercel.app/task/AutoChangeStatus`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,
@@ -123,7 +123,7 @@ const TableTask = () => {
   // Lấy tên project
   const GetNameProject = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/project/GetnameProject/${projectId}`, {
+      const res = await axios.get(`http:/https://backend-task-manager-one.vercel.app/project/GetnameProject/${projectId}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,
@@ -143,7 +143,7 @@ const TableTask = () => {
     }
     try {
       await axios({
-        url: 'http://localhost:8080/task/ChangeStatus', method: "PATCH", data: values, headers: {
+        url: 'https://backend-task-manager-one.vercel.app/task/ChangeStatus', method: "PATCH", data: values, headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,
         }
@@ -156,7 +156,7 @@ const TableTask = () => {
   // xóa task
   const API_Delete_Task = async(id)=>{
 
-    const res = await axios({url:`http://localhost:8080/task/DeleteTask/${id}`,method:"PATCH",headers: {
+    const res = await axios({url:`https://backend-task-manager-one.vercel.app/task/DeleteTask/${id}`,method:"PATCH",headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem("Token")}`,
     }})

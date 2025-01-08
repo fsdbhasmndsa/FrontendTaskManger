@@ -20,7 +20,7 @@ const ChangePassword = () => {
         }),
         onSubmit: async (values) => {
             console.log("first",values)
-            const res = await axios({url:"http://localhost:8080/user/changepassword",method:"POST",data:values,headers: {
+            const res = await axios({url:"https://backend-task-manager-one.vercel.app/user/changepassword",method:"POST",data:values,headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${localStorage.getItem("Token")}`,
               }})

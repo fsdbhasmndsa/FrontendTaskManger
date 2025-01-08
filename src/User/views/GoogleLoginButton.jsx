@@ -27,7 +27,7 @@ const GoogleLoginButton = () => {
     };
 
     try {
-      const res = await axios({url:"http://localhost:8080/user/LoginWithGoogle",method:"POST",data:userData,
+      const res = await axios({url:"https://backend-task-manager-one.vercel.app/user/LoginWithGoogle",method:"POST",data:userData,
         headers: {
             'Content-Type': 'application/json',
           }

@@ -29,7 +29,7 @@ const PersonalPage = () => {
   const Call_API_DATA_User = async () => {
 
 
-    const res = await axios({url:"http://localhost:8080/user/Detail",method:"GET", headers: {
+    const res = await axios({url:"https://backend-task-manager-one.vercel.app/user/Detail",method:"GET", headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem("Token")}`,
     }})
