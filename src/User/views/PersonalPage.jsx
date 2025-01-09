@@ -7,7 +7,7 @@ const PersonalPage = () => {
   const canvasRef = useRef(null);
   const [dataUser, SetdataUser] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [editMode, setEditMode] = useState(false);
   const Formik = useFormik({
     initialValues: {
       Fullname: "",
@@ -34,6 +34,7 @@ const PersonalPage = () => {
       {
         toast.error(res.data.message)
       }
+      setEditMode(false)
       setLoading(true)
 
     }
@@ -53,6 +54,7 @@ const PersonalPage = () => {
       }
     });
     SetdataUser(res.data);
+
     setLoading(false);
   };
 
@@ -80,6 +82,7 @@ const PersonalPage = () => {
   }, [dataUser]);
 
   return (
+    
     <div className="container position-relative" style={{ marginTop: "20px" }}>
       {loading && (
         <div className="spinner-overlay">
@@ -105,12 +108,12 @@ const PersonalPage = () => {
         ></canvas>
         <div className="card-body text-center">
           {editMode ? (
-            <div>
+            <form onSubmit={Formik.handleSubmit}>
               <input
                 type="text"
                 id='Email'
                 value={dataUser.UserDetail?.Email}
-                onChange={handleInputChange}
+               
                 className="form-control mb-2"
                 disabled
                 placeholder="Email"
@@ -119,7 +122,7 @@ const PersonalPage = () => {
                 type="text"
                 id='Fullname'
                 value={dataUser.UserDetail?.Fullname}
-                onChange={handleInputChange}
+                onChange={Formik.handleChange}
                 className="form-control mb-2"
                 placeholder="Tên của bạn"
               />
@@ -127,13 +130,15 @@ const PersonalPage = () => {
               <textarea
                 id='Title'
                 value={dataUser.UserDetail?.Title}
-                onChange={handleInputChange}
+                onChange={Formik.handleChange}
                 className="form-control mb-2"
                 rows="3"
                 placeholder="Title"
               ></textarea>
               {Formik.errors.Title && <i className='text-danger my-2 ms-2'>{Formik.errors.Title}</i>}
-            </div>
+
+              <button type='submit' className='btn btn-success mt-3'>Cập nhật</button> 
+            </form>
           ) : (
             <>
               <h1 className="card-title" style={{ fontSize: "2rem" }}>
@@ -155,13 +160,13 @@ const PersonalPage = () => {
               </ul>
             </>
           )}
-
-          <button
-            className={`btn ${editMode ? "btn-success" : "btn-primary"} mt-3`}
-            onClick={editMode ? handleSave : handleEditToggle}
-          >
-            {editMode ? "Lưu thay đổi" : "Chỉnh sửa"}
-          </button>
+          <button className='btn btn-primary mt-3' onClick={()=>{
+            setEditMode(true)
+          }}>Chỉnh sữa</button> 
+          
+        
+           
+      
         </div>
       </div>
     </div>
