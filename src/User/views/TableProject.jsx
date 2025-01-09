@@ -45,7 +45,7 @@ const TableProject = () => {
       const close = document.getElementsByClassName("btn-close")[0];
       if (StatusUpdate) {
         const res = await axios({
-          url: "http://locahttps://backend-task-manager-one.vercel.app/project/Update", method: "PUT", data: values, headers: {
+          url: "https://backend-task-manager-one.vercel.app/project/Update", method: "PUT", data: values, headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem("Token")}`,
           }
@@ -85,10 +85,10 @@ const TableProject = () => {
         }
         else {
           toast.error(res.data.message)
-          
+          setLoading(false)
         }
       }
-      setLoading(false)
+      
     }
   })
   return (
