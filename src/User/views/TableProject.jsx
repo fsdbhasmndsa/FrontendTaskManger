@@ -85,10 +85,10 @@ const TableProject = () => {
         }
         else {
           toast.error(res.data.message)
-          setLoading(false)
+          
         }
       }
-
+      setLoading(false)
     }
   })
   return (
