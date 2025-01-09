@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { useFormik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import * as Yup from "yup";
 
@@ -127,18 +127,23 @@ const PersonalPage = () => {
               />
               <input
                 type="text"
-                {...formik.getFieldProps("Fullname")}
+                  value={formik.values.Fullname}
+                  onChange={formik.handleChange}
+                  id='Fullname'
                 className="form-control mb-2"
                 placeholder="Tên của bạn"
               />
               {formik.errors.Fullname && <i className="text-danger my-2 ms-2">{formik.errors.Fullname}</i>}
               <textarea
-                {...formik.getFieldProps("Title")}
+                value={formik.values.Title}
+                onChange={formik.handleChange}
+                id='Title'
                 className="form-control mb-2"
                 rows="3"
                 placeholder="Mô tả"
               ></textarea>
               {formik.errors.Title && <i className="text-danger my-2 ms-2">{formik.errors.Title}</i>}
+              <br />
               <button type="submit" className="btn btn-success mt-3" disabled={loading}>
                 {loading ? "Đang cập nhật..." : "Cập nhật"}
               </button>
@@ -161,7 +166,16 @@ const PersonalPage = () => {
               </ul>
             </>
           )}
-         {editMode == false &&  <button className="btn btn-primary mt-3" onClick={() => setEditMode(true)}>
+         {editMode == false &&  <button className="btn btn-primary mt-3" 
+         onClick={() => {
+          setEditMode(true);
+          formik.setFieldValue("Fullname",formik.values.Fullname)
+          formik.setFieldValue("Title",formik.values.Title)
+         }
+      
+         
+          
+         }>
             Chỉnh sửa
           </button>}
         </div>
