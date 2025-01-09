@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-
+import * as Yup from "yup"
 const PersonalPage = () => {
   const canvasRef = useRef(null);
   const [dataUser, SetdataUser] = useState([]);
