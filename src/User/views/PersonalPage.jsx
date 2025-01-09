@@ -2,87 +2,99 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-import * as Yup from "yup"
+import * as Yup from "yup";
+
 const PersonalPage = () => {
   const canvasRef = useRef(null);
-  const [dataUser, SetdataUser] = useState([]);
+  const [dataUser, setDataUser] = useState({});
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const Formik = useFormik({
+
+  const formik = useFormik({
     initialValues: {
       Fullname: "",
-      Title: ""
+      Title: "",
     },
     validationSchema: Yup.object({
+      Fullname: Yup.string().required("Hãy nhập Họ tên"),
       Title: Yup.string().required("Hãy nhập Mô tả"),
-      Fullname: Yup.string().required("Hãy nhập Họ tên")
-    
     }),
-    onSubmit: async(values)=>{
-      setLoading(true)
-      const res = await axios({url:"https://backend-task-manager-one.vercel.app/user/Update",method:"PUT",data:values, headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const res = await axios.put(
+          "https://backend-task-manager-one.vercel.app/user/Update",
+          values,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem("Token")}`,
+            },
+          }
+        );
 
-      }})
-
-      if(res.data.code = 200)
-      {
-        toast.success(res.data.message)
+        if (res.data.code === 200) {
+          toast.success(res.data.message);
+          setDataUser((prev) => ({
+            ...prev,
+            UserDetail: { ...prev.UserDetail, ...values },
+          }));
+        } else {
+          toast.error(res.data.message);
+        }
+      } catch (error) {
+        toast.error("Có lỗi xảy ra khi cập nhật thông tin.");
+      } finally {
+        setLoading(false);
+        setEditMode(false);
       }
-      else
-      {
-        toast.error(res.data.message)
-      }
-      setEditMode(false)
-      setLoading(true)
+    },
+  });
 
-    }
-
-
-  })
-
-
-  const Call_API_DATA_User = async () => {
+  const fetchUserData = async () => {
     setLoading(true);
-    const res = await axios({
-      url: "https://backend-task-manager-one.vercel.app/user/Detail",
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
-      }
-    });
-    SetdataUser(res.data);
-
-    setLoading(false);
+    try {
+      const res = await axios.get(
+        "https://backend-task-manager-one.vercel.app/user/Detail",
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      setDataUser(res.data);
+    } catch (error) {
+      toast.error("Không thể tải thông tin người dùng.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    Call_API_DATA_User();
+    fetchUserData();
   }, []);
 
   useEffect(() => {
     if (dataUser.UserDetail) {
-      const fullName = dataUser?.UserDetail?.Fullname;
-      const parts = fullName.split(" "); // Tách chuỗi theo khoảng trắng
-      const lastName = parts[parts.length - 1]; // Lấy phần tử cuối cùng
-      const firstLetter = lastName.charAt(0); // Lấy chữ cái đầu tiên
+      const fullName = dataUser.UserDetail.Fullname || "";
+      const lastName = fullName.split(" ").pop() || "";
+      const firstLetter = lastName.charAt(0).toUpperCase();
 
-      // Vẽ chữ cái đầu tiên lên canvas
       const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Xóa mọi hình vẽ trước đó
-      ctx.font = "48px Arial";
-      ctx.fillStyle = "#000"; // Màu chữ
-      ctx.textAlign = "center"; // Căn giữa
-      ctx.textBaseline = "middle"; // Căn giữa theo chiều dọc
-      ctx.fillText(firstLetter, canvas.width / 2, canvas.height / 2); // Vẽ chữ cái lên canvas
+      if (canvas && firstLetter) {
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "48px Arial";
+        ctx.fillStyle = "#000";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(firstLetter, canvas.width / 2, canvas.height / 2);
+      }
     }
   }, [dataUser]);
 
   return (
-    
     <div className="container position-relative" style={{ marginTop: "20px" }}>
       {loading && (
         <div className="spinner-overlay">
@@ -91,10 +103,7 @@ const PersonalPage = () => {
           </div>
         </div>
       )}
-      <div
-        className="card"
-        style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}
-      >
+      <div className="card" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
         <canvas
           ref={canvasRef}
           width="150"
@@ -108,65 +117,53 @@ const PersonalPage = () => {
         ></canvas>
         <div className="card-body text-center">
           {editMode ? (
-            <form onSubmit={Formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
               <input
                 type="text"
-                id='Email'
-                value={dataUser.UserDetail?.Email}
-               
+                value={dataUser.UserDetail?.Email || ""}
                 className="form-control mb-2"
                 disabled
                 placeholder="Email"
               />
               <input
                 type="text"
-                id='Fullname'
-                value={dataUser.UserDetail?.Fullname}
-                onChange={Formik.handleChange}
+                {...formik.getFieldProps("Fullname")}
                 className="form-control mb-2"
                 placeholder="Tên của bạn"
               />
-              {Formik.errors.Fullname && <i className='text-danger my-2 ms-2'>{Formik.errors.Fullname}</i>}
+              {formik.errors.Fullname && <i className="text-danger my-2 ms-2">{formik.errors.Fullname}</i>}
               <textarea
-                id='Title'
-                value={dataUser.UserDetail?.Title}
-                onChange={Formik.handleChange}
+                {...formik.getFieldProps("Title")}
                 className="form-control mb-2"
                 rows="3"
-                placeholder="Title"
+                placeholder="Mô tả"
               ></textarea>
-              {Formik.errors.Title && <i className='text-danger my-2 ms-2'>{Formik.errors.Title}</i>}
-
-              <button type='submit' className='btn btn-success mt-3'>Cập nhật</button> 
+              {formik.errors.Title && <i className="text-danger my-2 ms-2">{formik.errors.Title}</i>}
+              <button type="submit" className="btn btn-success mt-3" disabled={loading}>
+                {loading ? "Đang cập nhật..." : "Cập nhật"}
+              </button>
             </form>
           ) : (
             <>
               <h1 className="card-title" style={{ fontSize: "2rem" }}>
-                {dataUser.UserDetail?.Fullname}
+                {dataUser.UserDetail?.Fullname || "Chưa cập nhật"}
               </h1>
               <p className="card-text" style={{ fontStyle: "italic", color: "#555" }}>
-                {dataUser.UserDetail?.Title}
-
+                {dataUser.UserDetail?.Title || "Chưa cập nhật"}
               </p>
               <p className="card-text" style={{ color: "#333" }}>
-                {dataUser.UserDetail?.Email}
+                {dataUser.UserDetail?.Email || "Chưa cập nhật"}
               </p>
               <ul className="list-unstyled">
-
-
                 <li>
-                  <strong>Tổng số dự án:</strong> {dataUser.ProjectTotal}
+                  <strong>Tổng số dự án:</strong> {dataUser.ProjectTotal || 0}
                 </li>
               </ul>
             </>
           )}
-          <button className='btn btn-primary mt-3' onClick={()=>{
-            setEditMode(true)
-          }}>Chỉnh sữa</button> 
-          
-        
-           
-      
+         {editMode == false &&  <button className="btn btn-primary mt-3" onClick={() => setEditMode(true)}>
+            Chỉnh sửa
+          </button>}
         </div>
       </div>
     </div>
