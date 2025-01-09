@@ -344,7 +344,7 @@ const TableTask = () => {
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
       </div>
      
-      <div className="modal-body" style={{ backgroundColor: '#f8f9fa', padding: '10px', borderRadius: '15px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', maxWidth: '800px', margin: '0 auto' }}>
+      <div className="modal-body" style={{ backgroundColor: '#f8f9fa', padding: '10px', borderRadius: '15px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', minWidth: '800px', margin: '0 auto' }}>
   {/* Job Header */}
   <div style={{ backgroundColor: '#007bff', color: 'white', borderRadius: '15px 15px 0 0', padding: '20px' }}>
     <h3 style={{ fontSize: '24px', fontWeight: 'bold' }}>{TaskDetail.Title}</h3>
