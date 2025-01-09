@@ -157,9 +157,9 @@ const TableProject = () => {
                   </div>
 
 
-                  {StatusUpdate ? <button type='submit' className='btn fw-bold text-light mt-4' style={{ background: `linear-gradient(135deg, #ff6a6a, #d63031)`, minWidth: 100 }}>Cập nhật</button>
+                  {StatusUpdate ? <button type='submit' disabled={loading} className='btn fw-bold text-light mt-4' style={{ background: `linear-gradient(135deg, #ff6a6a, #d63031)`, minWidth: 100 }}>{loading ? "Đang cập nhật..." : "Cập nhật"}</button>
                     :
-                    <button type='submit' className='btn fw-bold text-light mt-4' style={{ background: `linear-gradient(135deg, #00c6ff, #0072ff)`, minWidth: 100 }}>Thêm</button>}
+                    <button type='submit' disabled={loading} className='btn fw-bold text-light mt-4' style={{ background: `linear-gradient(135deg, #00c6ff, #0072ff)`, minWidth: 100 }}> {loading ? "Đang thêm..." : "Thêm"}</button>}
 
                   <button onClick={() => {
                     Formik.resetForm()

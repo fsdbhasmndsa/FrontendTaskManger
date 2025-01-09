@@ -169,8 +169,8 @@ const PersonalPage = () => {
          {editMode == false &&  <button className="btn btn-primary mt-3" 
          onClick={() => {
           setEditMode(true);
-          formik.setFieldValue("Fullname",formik.values.Fullname)
-          formik.setFieldValue("Title",formik.values.Title)
+          formik.setFieldValue("Fullname",dataUser.UserDetail?.Fullname)
+          formik.setFieldValue("Title",formik.UserDetail?.Title)
          }
       
          
