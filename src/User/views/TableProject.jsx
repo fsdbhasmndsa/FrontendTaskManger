@@ -7,11 +7,12 @@ import { NavLink } from 'react-router-dom'
 
 
 const TableProject = () => {
-
+  const [loading, setLoading] = useState(false);
   const [ListProject, SetListProject] = useState([]);
   const [StatusUpdate, SetStatusUpdate] = useState(false);
 
   const Call_API_GetProjectByUser = async () => {
+    setLoading(true)
     const res = await axios({
       url: "https://backend-task-manager-one.vercel.app/project", method: "GET", headers: {
         'Content-Type': 'application/json',
@@ -21,7 +22,7 @@ const TableProject = () => {
 
     SetListProject(res.data.ListProject)
     console.log("first", res.data.ListProject)
-
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const TableProject = () => {
       Content: Yup.string().required("Hãy nhập Content")
     }),
     onSubmit: async (values) => {
-      console.log(values)
+      setLoading(true)
       const close = document.getElementsByClassName("btn-close")[0];
       if (StatusUpdate) {
         const res = await axios({
@@ -54,6 +55,7 @@ const TableProject = () => {
           toast.success(res.data.message)
 
           Call_API_GetProjectByUser();
+          setLoading(false)
           Formik.resetForm()
           if (close) {
             close.click()
@@ -61,6 +63,7 @@ const TableProject = () => {
         }
         else {
           toast.error(res.data.message)
+          setLoading(false)
         }
       }
       else {
@@ -73,7 +76,7 @@ const TableProject = () => {
 
         if (res.data.code == 200) {
           toast.success(res.data.message)
-
+          setLoading(false)
           Call_API_GetProjectByUser();
           Formik.resetForm()
           if (close) {
@@ -82,23 +85,33 @@ const TableProject = () => {
         }
         else {
           toast.error(res.data.message)
+          setLoading(false)
         }
       }
 
     }
   })
   return (
-    <div className='container'>
+    <div className='container position-relative'>
+
+      {loading && (
+        <div className="spinner-overlay">
+          <div className="spinner-border text-success" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
+
       <div className="container-fluid d-flex align-items-center">
         <span className="navbar-brand mb-0 fw-bold ">Task have to do to have Job</span>
         <div className="ms-auto d-flex align-items-center">
-          <button onClick={()=>{
+          <button onClick={() => {
             SetStatusUpdate(false)
             Formik.resetForm()
           }} className="btn btn-outline-light me-2" id='BTNADD' data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
             <i className="bi bi-plus-square-fill" /> <span>Add</span>
           </button>
-          <button style={{display:"none"}} className="btn btn-outline-light me-2"  id='BTNUP'  data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+          <button style={{ display: "none" }} className="btn btn-outline-light me-2" id='BTNUP' data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
             <i className="bi bi-plus-square-fill" /> <span>Add</span>
           </button>
           <button className="btn btn-outline-light me-2">
@@ -219,22 +232,22 @@ const TableProject = () => {
 
                 })
 
-                
+
                 }
-                {ListProject.length ==0 ? 
+                {ListProject.length == 0 ?
                   <div className="row d-flex align-items-center justify-content-center" style={{ minHeight: '60vh', minWidth: 370 }}>
-                  <div className="col-md-12 d-flex align-items-center justify-content-center">
-                    <img
-                      className="img-fluid"
-                      style={{ borderRadius: 15 }}
-                      width={300}
-                      height={300}
-                      src="https://img.freepik.com/premium-vector/no-data-found-empty-file-folder-concept-design-vector-illustration_620585-1698.jpg?ga=GA1.1.1115368738.1680703315&semt=ais_hybrid"
-                      alt=""
-                    />
+                    <div className="col-md-12 d-flex align-items-center justify-content-center">
+                      <img
+                        className="img-fluid"
+                        style={{ borderRadius: 15 }}
+                        width={300}
+                        height={300}
+                        src="https://img.freepik.com/premium-vector/no-data-found-empty-file-folder-concept-design-vector-illustration_620585-1698.jpg?ga=GA1.1.1115368738.1680703315&semt=ais_hybrid"
+                        alt=""
+                      />
+                    </div>
                   </div>
-                </div>
-                 : null }
+                  : null}
 
               </div>
             </div>

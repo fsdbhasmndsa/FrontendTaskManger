@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 const ItemType = 'TASK';
 
 const TableTask = () => {
+  const [loading, setLoading] = useState(false);
   const [NameProject, SetNameProject] = useState('');
   const [TaskDetail, SetTaskDetail] = useState({
     Title:"",
@@ -96,6 +97,7 @@ const TableTask = () => {
   // Lấy danh sách task theo ID project
   const GetTaskByUser = async () => {
     try {
+      setLoading(true)
       const res = await axios.get(`https://backend-task-manager-one.vercel.app/task/GETtaskByID/${projectId}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -103,19 +105,22 @@ const TableTask = () => {
         },
       });
       SetTaskByUser(res.data.ListTask);
+      setLoading(false)
     } catch (err) {
       console.error('Error fetching tasks:', err);
+      setLoading(false)
     }
   };
 
   const AutoUpdateStatusNotFinish = async () => {
-    
+    setLoading(true)
       const res = await axios.get(`https://backend-task-manager-one.vercel.app/task/AutoChangeStatus`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,
         },
       });
+    setLoading(false)
      
  
   };
@@ -142,12 +147,14 @@ const TableTask = () => {
       "status": newStatus
     }
     try {
+      setLoading(true)
       await axios({
         url: 'https://backend-task-manager-one.vercel.app/task/ChangeStatus', method: "PATCH", data: values, headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,
         }
       });
+      setLoading(false)
       GetTaskByUser(); // Refresh lại danh sách task
     } catch (err) {
       console.error('Error updating task status:', err);
@@ -155,7 +162,7 @@ const TableTask = () => {
   };
   // xóa task
   const API_Delete_Task = async(id)=>{
-
+    setLoading(true)
     const res = await axios({url:`https://backend-task-manager-one.vercel.app/task/DeleteTask/${id}`,method:"PATCH",headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem("Token")}`,
@@ -163,11 +170,15 @@ const TableTask = () => {
 
     if(res.data.code)
     {
+      
       toast.success(res.data.message)
+      setLoading(false)
+
     }
     else
     {
       toast.error(res.data.message)
+      setLoading(false)
     }
     GetTaskByUser(); // Refresh lại danh sách task
   }
@@ -281,7 +292,15 @@ const TableTask = () => {
 
   return (
     <div>
-        <div className="container-fluid d-flex align-items-center">
+        <div className="container-fluid d-flex align-items-center position-relative">
+        {loading && (
+        <div className="spinner-overlay">
+          <div className="spinner-border text-success" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
+
       <h2 className="navbar-brand mb-0 fw-bold pt-3" style={{ fontSize: "1.4rem" }}>{NameProject}</h2>
         <div className="ms-auto d-flex align-items-center">
         <button className="btn btn-outline-light me-2" style={{display:"none"}} onClick={()=>{

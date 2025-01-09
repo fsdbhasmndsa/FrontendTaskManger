@@ -7,6 +7,7 @@ import * as Yup from "yup"
 import GoogleLoginButton from './GoogleLoginButton';
 
 const RegisterNext = () => {
+    const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
     const Navigation = useNavigate();
@@ -25,7 +26,7 @@ const RegisterNext = () => {
             Fullname: Yup.string().required("Hãy nhập Họ và tên").max(30, "Họ và tên <= 30").min(3, "Họ và tên >= 10")
         }),
         onSubmit: async (values) => {
-            console.log("first", values)
+            setLoading(true);
 
             const res = await axios({
                 url: "https://backend-task-manager-one.vercel.app/user/register",
@@ -38,9 +39,10 @@ const RegisterNext = () => {
 
             if (res.data.code == 400) {
                 toast.error(res.data.message)
+                setLoading(false);
             }
             if (res.data.code == 200) {
-            
+                setLoading(false);
                 toast.success(res.data.message)
                 Navigation("/")
             }
@@ -52,10 +54,18 @@ const RegisterNext = () => {
 
 
     return (
-        <div className="d-flex flex-column align-items-center justify-content-center vh-100">
+        <div className="d-flex flex-column align-items-center justify-content-center vh-100 position-relative">
+
+            {loading && (
+                <div className="spinner-overlay">
+                    <div className="spinner-border text-success" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
             {/* Logo */}
             <div className="mb-4">
-            <img width="48" height="48" className='me-2' src="https://img.icons8.com/color/48/github--v1.png" alt="github--v1"/>
+                <img width="48" height="48" className='me-2' src="https://img.icons8.com/color/48/github--v1.png" alt="github--v1" />
             </div>
 
             {/* Tiêu đề */}

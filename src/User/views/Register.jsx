@@ -20,7 +20,7 @@ const Register = () => {
   })
 
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center vh-100">
+    <div className="d-flex flex-column align-items-center justify-content-center vh-100 ">
       {/* Logo */}
       <div className="mb-4">
       <img width="48" height="48" className='me-2' src="https://img.icons8.com/color/48/github--v1.png" alt="github--v1"/>
