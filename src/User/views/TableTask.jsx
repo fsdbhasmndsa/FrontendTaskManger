@@ -128,7 +128,7 @@ const TableTask = () => {
   // Lấy tên project
   const GetNameProject = async () => {
     try {
-      const res = await axios.get(`http:/https://backend-task-manager-one.vercel.app/project/GetnameProject/${projectId}`, {
+      const res = await axios.get(`https://backend-task-manager-one.vercel.app/project/GetnameProject/${projectId}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("Token")}`,
