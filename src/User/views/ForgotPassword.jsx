@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import * as Yup from "yup"
 
 const ForgotPassword = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [Email,SetEmail] = useState("")
   const [otp, setOtp] = useState(["", "", "", "", "", ""]); // State để lưu giá trị của từng ô input
@@ -37,6 +38,7 @@ const ForgotPassword = () => {
      
     }),
     onSubmit: async (values) => {
+      setLoading(true)
       console.log("first",values)
       const res = await axios({
         url: "https://backend-task-manager-one.vercel.app/user/forgotpassword",
@@ -50,12 +52,15 @@ const ForgotPassword = () => {
       {
         toast.success(res.data.message)
         SetEmail(values.Email)
+        setLoading(false)
         handleNextStep()
       }
       else
       {
+        setLoading(false)
         toast.error(res.data.message)
       }
+      
     }
   })
 
@@ -72,6 +77,7 @@ const ForgotPassword = () => {
      
     }),
     onSubmit: async (values) => {
+      setLoading(true)
       console.log("Email",Email)
     
       values.Email = Email
@@ -89,16 +95,19 @@ const ForgotPassword = () => {
         toast.success(res.data.message)
       
         //
+        setLoading(false)
         navigate("/login")
       }
       else
       {
+        setLoading(false)
         toast.error(res.data.message)
       }
     }
   })
 
   const handleSubmit = async () => {
+    setLoading(true)
     const otpValue = otp.join(""); // Kết hợp các giá trị thành một chuỗi
     const values ={
       "Email":Email,
@@ -114,9 +123,11 @@ const ForgotPassword = () => {
         toast.success(res.data.message)
         SetEmail(values.Email)
         handleNextStep()
+        setLoading(false)
       }
       else
       {
+        setLoading(false)
         toast.error(res.data.message)
       }
 
@@ -124,9 +135,16 @@ const ForgotPassword = () => {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center vh-100"
+      className="d-flex justify-content-center align-items-center vh-100 position-relative"
       style={{ backgroundColor: "#f7f8fc" }}
     >
+        {loading && (
+        <div className="spinner-overlay">
+          <div className="spinner-border text-success" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
       <div
         className="card p-4"
         style={{
