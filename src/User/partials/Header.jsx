@@ -3,6 +3,7 @@ import axios from "axios";
 
 const Header = ({ toggleSidebar }) => {
   const [NameUser, SetNameUser] = useState([]);
+
   const GET_Name_User = async () => {
     const res = await axios({
       url: "https://backend-task-manager-one.vercel.app/user/getnameuser",
@@ -22,12 +23,12 @@ const Header = ({ toggleSidebar }) => {
 
   return (
     <header className="header d-flex align-items-center justify-content-between px-4 py-3">
-      {/* Nút Toggle Sidebar */}
-      <button className="btn-toggle-sidebar d-lg-none" onClick={toggleSidebar}>
-        ☰
+      <button
+        className="btn btn-outline-primary d-lg-none"
+        onClick={toggleSidebar}
+      >
+        <i className="bi bi-list"></i>
       </button>
-
-      {/* Thông tin người dùng */}
       <div className="user-info d-flex align-items-center">
         <span className="user-name me-3">HELLO, {NameUser}</span>
       </div>

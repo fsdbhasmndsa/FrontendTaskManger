@@ -4,7 +4,7 @@ import Header from "../partials/Header";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -16,11 +16,8 @@ const Layout = () => {
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
       {/* Main Content */}
-      <div className={`flex-grow-1 ${isSidebarOpen ? "sidebar-open" : ""}`}>
-        {/* Header */}
+      <div className="main-content">
         <Header toggleSidebar={toggleSidebar} />
-
-        {/* Nội dung động */}
         <div className="p-4">
           <Outlet />
         </div>
