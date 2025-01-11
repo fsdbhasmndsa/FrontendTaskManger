@@ -1,7 +1,7 @@
-import React from 'react';
-import Sidebar from '../partials/Sidebar';
-import Header from '../partials/Header';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import Sidebar from "../partials/Sidebar";
+import Header from "../partials/Header";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
@@ -10,11 +10,11 @@ const Layout = () => {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-grow-1">
+      <div className="main-content">
         {/* Header */}
         <Header />
 
-        {/* Dynamic Content */}
+        {/* Nội dung động */}
         <div className="p-4">
           <Outlet />
         </div>

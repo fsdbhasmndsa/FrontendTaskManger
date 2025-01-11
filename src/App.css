@@ -46,79 +46,59 @@ footer {
 }
 
 /* Sidebar mặc định cho màn hình lớn */
+/* Sidebar luôn hiển thị trên màn hình lớn */
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: white;
   min-width: 250px;
   height: 100vh;
-  color: #525f7f;
+  color: black; /* Đặt màu chữ đen */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  position: fixed;
   z-index: 1040;
   transition: transform 0.3s ease-in-out;
 }
 
-/* Sidebar luôn hiển thị trên màn hình lớn */
-@media (min-width: 992px) {
-  .sidebar {
-    transform: translateX(0); /* Hiển thị Sidebar */
-  }
+/* Thêm khoảng trống cho nội dung chính khi Sidebar xuất hiện */
+.main-content {
+  margin-left: 250px; /* Cùng kích thước chiều rộng của Sidebar */
+  padding: 20px;
+  transition: margin-left 0.3s ease-in-out;
 }
 
-/* Sidebar ẩn mặc định trên màn hình nhỏ */
+/* Cho màn hình nhỏ, Sidebar mặc định ẩn */
 @media (max-width: 991px) {
   .sidebar {
     transform: translateX(-100%); /* Ẩn Sidebar */
   }
 
   .sidebar.open {
-    transform: translateX(0); /* Hiện Sidebar khi mở */
+    transform: translateX(0); /* Hiển thị Sidebar khi mở */
   }
 
-  .navbar-toggler {
-    display: block; /* Hiển thị nút toggle */
+  .main-content {
+    margin-left: 0; /* Không để khoảng trống khi Sidebar bị ẩn */
   }
 }
-
-/* Nút toggle */
-.navbar-toggler {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #525f7f;
-  border: none;
+.sidebar .nav-link {
+  color: black;
+  font-size: 0.95rem;
+  padding: 10px 15px;
   border-radius: 5px;
-  padding: 5px 10px;
-  z-index: 1050;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.navbar-toggler-icon {
-  width: 24px;
-  height: 2px;
-  background-color: white;
-  display: block;
-  position: relative;
-}
 
-.navbar-toggler-icon::before,
-.navbar-toggler-icon::after {
-  content: "";
-  position: absolute;
-  width: 24px;
-  height: 2px;
-  background-color: white;
-  transition: transform 0.2s ease;
-}
 
-.navbar-toggler-icon::before {
-  top: -8px;
-}
-
-.navbar-toggler-icon::after {
-  top: 8px;
+/* Không đổi màu khi link được chọn */
+.sidebar .nav-link.active {
+  background-color: white; /* Nền nhẹ cho link được chọn */
+  color: rgb(29, 8, 223); /* Giữ màu chữ đen */
 }
 
 
