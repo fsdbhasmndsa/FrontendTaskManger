@@ -45,60 +45,125 @@ footer {
   font-size: 0.9rem;
 }
 
-/* Sidebar mặc định cho màn hình lớn */
-/* Sidebar luôn hiển thị trên màn hình lớn */
+/* Sidebar */
+/* Sidebar */
+/* Sidebar mặc định */
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: white;
-  min-width: 250px;
-  height: 100vh;
-  color: black; /* Đặt màu chữ đen */
+  background-color: white; /* Màu nền trắng */
+  min-width: 250px; /* Chiều rộng Sidebar */
+  height: 100vh; /* Sidebar chiếm toàn bộ chiều cao màn hình */
+  color: #525f7f; /* Màu chữ xám */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1040;
-  transition: transform 0.3s ease-in-out;
+  padding: 20px; /* Khoảng cách padding trong Sidebar */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow nhẹ */
+  position: fixed; /* Giữ Sidebar cố định */
+  top: 0;
+  left: 0;
+  z-index: 1040; /* Z-index cao để Sidebar luôn ở trên */
+  transform: translateX(-100%); /* Ẩn Sidebar mặc định */
+  transition: transform 0.3s ease-in-out; /* Hiệu ứng chuyển động */
 }
 
-/* Thêm khoảng trống cho nội dung chính khi Sidebar xuất hiện */
-.main-content {
-  margin-left: 250px; /* Cùng kích thước chiều rộng của Sidebar */
-  padding: 20px;
-  transition: margin-left 0.3s ease-in-out;
+/* Sidebar khi được mở */
+.sidebar.open {
+  transform: translateX(0); /* Hiển thị Sidebar */
 }
 
-/* Cho màn hình nhỏ, Sidebar mặc định ẩn */
-@media (max-width: 991px) {
-  .sidebar {
-    transform: translateX(-100%); /* Ẩn Sidebar */
-  }
-
-  .sidebar.open {
-    transform: translateX(0); /* Hiển thị Sidebar khi mở */
-  }
-
-  .main-content {
-    margin-left: 0; /* Không để khoảng trống khi Sidebar bị ẩn */
-  }
+/* Nút đóng Sidebar trên màn hình nhỏ */
+.btn-close-sidebar {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #525f7f;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 20px;
 }
+
+/* Logo Section */
+.sidebar h4 {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin: 0;
+  color: #2dce89; /* Màu xanh lá cho chữ logo */
+}
+
+/* Navigation Links */
 .sidebar .nav-link {
-  color: black;
+  color: black; /* Màu chữ đen */
   font-size: 0.95rem;
   padding: 10px 15px;
   border-radius: 5px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease; /* Hiệu ứng hover */
+  text-decoration: none; /* Loại bỏ gạch chân */
 }
 
+.sidebar .nav-link:hover {
+  background-color: #ced3ee; /* Màu nền xám nhạt khi hover */
+}
 
+/* Active Link */
+.sidebar .nav-link.text-Gradian {
+  background: linear-gradient(87deg, #11cdef, #1171ef); /* Gradient cho link đang active */
+  -webkit-background-clip: text; /* Áp dụng gradient vào chữ */
+  color: transparent; /* Làm chữ trong suốt để gradient hiển thị */
+}
 
-/* Không đổi màu khi link được chọn */
-.sidebar .nav-link.active {
-  background-color: white; /* Nền nhẹ cho link được chọn */
-  color: rgb(29, 8, 223); /* Giữ màu chữ đen */
+/* Khoảng cách giữa các mục */
+.sidebar .nav-item + .nav-item {
+  margin-top: 10px;
+}
+
+/* Documentation Section */
+.sidebar h6 {
+  color: #8898aa; /* Màu chữ xám nhạt cho tiêu đề */
+  font-size: 0.85rem;
+  text-transform: uppercase; /* In hoa chữ */
+  margin-bottom: 15px;
+}
+
+.sidebar .btn {
+  background-color: #2dce89; /* Màu xanh lá đậm */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  text-transform: uppercase; /* In hoa */
+}
+
+.sidebar .btn:hover {
+  background-color: #28b87a; /* Màu xanh lá nhạt hơn khi hover */
+}
+
+/* Sidebar luôn hiển thị trên màn hình lớn */
+@media (min-width: 992px) {
+  .sidebar {
+    transform: translateX(0); /* Hiển thị Sidebar mặc định */
+  }
+  .btn-close-sidebar {
+    display: none; /* Ẩn nút đóng trên màn hình lớn */
+  }
+}
+
+/* Hiển thị nội dung chính cạnh Sidebar */
+.main-content {
+  margin-left: 250px; /* Đẩy nội dung chính sang phải bằng chiều rộng Sidebar */
+  flex-grow: 1; /* Chiếm hết không gian còn lại */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar.open + .main-content {
+  margin-left: 0; /* Đẩy nội dung chính về vị trí cũ khi Sidebar đóng */
+}
+
+/* Sidebar animation cho màn hình nhỏ */
+@media (max-width: 991px) {
+  .main-content {
+    margin-left: 0; /* Không đẩy nội dung chính khi màn hình nhỏ */
+  }
 }
 
 
