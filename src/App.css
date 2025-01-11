@@ -47,78 +47,70 @@ footer {
 
 /* Sidebar */
 /* Sidebar */
-/* Sidebar */
 .sidebar {
-  background-color: white; /* Nền trắng */
-  position: fixed; /* Sidebar cố định */
-  top: 0;
-  left: 0;
-  width: 250px; /* Chiều rộng sidebar */
-  height: 100vh; /* Chiều cao chiếm toàn màn hình */
-  overflow-y: auto; /* Kích hoạt scroll khi cần */
-  transition: transform 0.3s ease-in-out; /* Hiệu ứng mở/đóng */
-  z-index: 1030; /* Đảm bảo sidebar trên các thành phần khác */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Bóng nhẹ */
-}
-
-.sidebar.closed {
-  transform: translateX(-100%); /* Sidebar ẩn khi đóng */
-}
-
-/* Sidebar link */
-.sidebar .nav-link {
+  background-color: white; /* Màu nền trắng */
+  min-width: 250px; /* Chiều rộng sidebar */
+  height: 100vh; /* Sidebar chiếm toàn bộ chiều cao màn hình */
   color: #525f7f; /* Màu chữ xám */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Đẩy "Documentation" xuống cuối */
+  padding: 20px; /* Khoảng cách padding trong sidebar */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow nhẹ giống mẫu */
+}
+
+/* Logo Section */
+.sidebar h4 {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin: 0;
+  color: #2dce89; /* Màu xanh lá cho chữ logo */
+}
+
+/* Navigation Links */
+.sidebar .nav-link {
+  color: #525f7f; /* Màu chữ xám cho các link */
   font-size: 0.95rem;
   padding: 10px 15px;
   border-radius: 5px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease; /* Hiệu ứng hover */
 }
+
 
 .sidebar .nav-link:hover {
-  background-color: #ced3ee; /* Màu nền xám nhạt */
-  background: linear-gradient(87deg, #11cdef, #1171ef); /* Gradient */
-  -webkit-background-clip: text; /* Clip gradient vào chữ */
-  color: transparent; /* Làm chữ trong suốt */
+  background-color: #ced3ee; /* Màu nền xám nhạt khi hover */
+  background: linear-gradient(87deg, #11cdef, #1171ef); /* Áp dụng gradient cho nền */
+  -webkit-background-clip: text; /* Áp dụng clip gradient vào chữ */
+  color: transparent; /* Làm cho chữ trở nên trong suốt để gradient hiển thị */
 }
 
-.sidebar .nav-link.active {
-  color: #1171ef; /* Màu xanh lam đậm khi được chọn */
+
+.sidebar .nav-item + .nav-item {
+  margin-top: 10px; /* Khoảng cách giữa các mục */
+}
+
+
+/* Documentation Section */
+.sidebar h6 {
+  color: #8898aa; /* Màu chữ xám nhạt cho "Documentation" */
+  font-size: 0.85rem;
+  text-transform: uppercase; /* In hoa chữ */
+  margin-bottom: 15px;
+}
+
+.sidebar .btn {
+  background-color: #2dce89; /* Màu xanh lá đậm */
+  color: white;
   font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  text-transform: uppercase; /* In hoa */
 }
 
-/* Header */
-.header {
-  background-color: #f8f9fa; /* Màu nền sáng */
-  padding: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bóng nhẹ */
-  z-index: 1020;
+.sidebar .btn:hover {
+  background-color: #28b87a; /* Màu xanh lá nhạt hơn khi hover */
 }
-
-/* Nội dung chính */
-.main-content {
-  margin-left: 250px; /* Đẩy nội dung chính qua phải */
-  transition: margin-left 0.3s ease-in-out; /* Hiệu ứng mượt khi Sidebar ẩn/hiện */
-}
-
-.sidebar.closed + .main-content {
-  margin-left: 0; /* Reset khi Sidebar đóng */
-}
-
-/* Responsive: Ẩn Sidebar trên màn hình nhỏ */
-@media (max-width: 991.98px) {
-  .sidebar {
-    transform: translateX(-100%); /* Mặc định ẩn sidebar trên màn hình nhỏ */
-  }
-
-  .sidebar.open {
-    transform: translateX(0); /* Hiển thị khi mở */
-  }
-
-  .main-content {
-    margin-left: 0; /* Reset margin */
-  }
-}
-
 
 
 /* Main Content Background */

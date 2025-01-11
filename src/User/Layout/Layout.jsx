@@ -1,29 +1,26 @@
-import React, { useState } from "react";
-import Sidebar from "../partials/Sidebar";
-import Header from "../partials/Header";
-import { Outlet } from "react-router-dom";
+import React from 'react'
+import Sidebar from '../partials/Sidebar'
+import Header from '../partials/Header'
+import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
-
   return (
     <div className="d-flex">
-      {/* Sidebar */}
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+    {/* Sidebar */}
+    <Sidebar />
 
-      {/* Main Content */}
-      <div className="main-content">
-        <Header toggleSidebar={toggleSidebar} />
-        <div className="p-4">
-          <Outlet />
-        </div>
+    {/* Main Content */}
+    <div className="flex-grow-1">
+      {/* Header */}
+      <Header />
+
+      {/* Nội dung động hiển thị qua Outlet */}
+      <div className="p-4">
+        <Outlet />
       </div>
     </div>
-  );
-};
+  </div>
+  )
+}
 
-export default Layout;
+export default Layout
