@@ -45,8 +45,7 @@ footer {
   font-size: 0.9rem;
 }
 
-/* Sidebar */
-/* Sidebar */
+/* Sidebar mặc định cho màn hình lớn */
 .sidebar {
   background-color: white;
   min-width: 250px;
@@ -57,70 +56,22 @@ footer {
   justify-content: space-between;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  position: fixed; /* Sidebar cố định */
-  z-index: 1040; /* Đảm bảo hiển thị trên nội dung khác */
+  position: fixed;
+  z-index: 1040;
   transition: transform 0.3s ease-in-out;
 }
 
-.sidebar.open {
-  transform: translateX(0); /* Hiện Sidebar */
+/* Sidebar luôn hiển thị trên màn hình lớn */
+@media (min-width: 992px) {
+  .sidebar {
+    transform: translateX(0); /* Hiển thị Sidebar */
+  }
 }
 
-.sidebar.collapse {
-  transform: translateX(-100%); /* Ẩn Sidebar */
-}
-
-.sidebar h4 {
-  font-weight: bold;
-  font-size: 1.4rem;
-  margin: 0;
-  color: #2dce89;
-}
-
-.sidebar .nav-link {
-  color: #525f7f;
-  font-size: 0.95rem;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.sidebar .nav-link:hover {
-  background-color: #ced3ee;
-  background: linear-gradient(87deg, #11cdef, #1171ef);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.sidebar .nav-item + .nav-item {
-  margin-top: 10px;
-}
-
-.sidebar h6 {
-  color: #8898aa;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  margin-bottom: 15px;
-}
-
-.sidebar .btn {
-  background-color: #2dce89;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 20px;
-  text-transform: uppercase;
-}
-
-.sidebar .btn:hover {
-  background-color: #28b87a;
-}
-
-/* Responsive Styles */
+/* Sidebar ẩn mặc định trên màn hình nhỏ */
 @media (max-width: 991px) {
   .sidebar {
-    transform: translateX(-100%); /* Mặc định ẩn Sidebar */
+    transform: translateX(-100%); /* Ẩn Sidebar */
   }
 
   .sidebar.open {
@@ -132,7 +83,7 @@ footer {
   }
 }
 
-/* Navbar Toggle Button */
+/* Nút toggle */
 .navbar-toggler {
   position: absolute;
   top: 20px;
@@ -169,6 +120,7 @@ footer {
 .navbar-toggler-icon::after {
   top: 8px;
 }
+
 
 
 /* Main Content Background */

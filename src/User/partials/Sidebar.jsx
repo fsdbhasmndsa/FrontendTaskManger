@@ -11,7 +11,7 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Toggle Button */}
+      {/* Nút Toggle (chỉ hiển thị trên màn hình nhỏ) */}
       <button
         className="navbar-toggler d-lg-none"
         onClick={toggleSidebar}
@@ -21,7 +21,7 @@ const Sidebar = () => {
       </button>
 
       {/* Sidebar */}
-      <nav className={`sidebar ${isOpen ? 'open' : 'collapse'}`}>
+      <nav className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div>
           {/* Logo Section */}
           <div className="d-flex align-items-center mb-5">
